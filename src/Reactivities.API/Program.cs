@@ -13,10 +13,16 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
         .EnableSensitiveDataLogging()
         .LogTo(Console.WriteLine, LogLevel.Information);
 });
+builder.Services.AddCors();
 
 var app = builder.Build();
 
 await DbInitializer.InitDb(app);
+app.UseCors(opt => {
+    opt.AllowAnyHeader()
+    .AllowAnyMethod()
+    .WithOrigins("http://localhost:3000", "https://localhost:3000");
+});
 
 app.MapControllers();
 
