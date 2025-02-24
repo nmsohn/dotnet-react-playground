@@ -17,7 +17,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Reactivities.Domain\Domain.csproj" />
       <ProjectReference Include="..\Reactivities.Persistence\Reactivities.Persistence.csproj" />
-      <ProjectReference Include="..\src\Reactivities.Persistence\Reactivities.Persistence.csproj" />
     </ItemGroup>
 
 </Project>
