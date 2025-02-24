@@ -4,6 +4,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>Reactivities.API</AssemblyName>
+    <RootNamespace>Reactivities.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Migrator\Migrator.csproj" />
+    <ProjectReference Include="..\Migrator\Migrator.csproj" />
     <ProjectReference Include="..\Reactivities.Application\Reactivities.Application.csproj" />
   </ItemGroup>
 

@@ -11,7 +11,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseNpgsql(builder.Configuration.GetConnectionString("ActivityDatabase"))
         .EnableSensitiveDataLogging()
-        .LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
+        .LogTo(Console.WriteLine, LogLevel.Information);
 });
 
 var app = builder.Build();

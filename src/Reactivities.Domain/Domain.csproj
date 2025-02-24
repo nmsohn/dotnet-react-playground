@@ -4,6 +4,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AssemblyName>Reactivities.Domain</AssemblyName>
+    <RootNamespace>Reactivities.Domain</RootNamespace>
   </PropertyGroup>
 
 </Project>
