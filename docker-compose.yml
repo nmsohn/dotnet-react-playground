@@ -1,0 +1,21 @@
+services:
+  reactivities-db:
+    image: postgres
+#    build:
+#      dockerfile: postgres_ssl/Dockerfile
+#    command: >
+#      -c ssl=on 
+#      -c ssl_cert_file=/var/lib/postgresql/server.crt 
+#      -c ssl_key_file=/var/lib/postgresql/server.key
+    container_name: reactivities-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgrespw
+      - POSTGRES_DB=reactivities-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - activities-db:/var/lib/postgresql/data
+volumes:
+  activities-db:
