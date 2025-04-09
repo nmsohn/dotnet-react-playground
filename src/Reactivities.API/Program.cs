@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Migrator.Setup;
+using Reactivities.Application.Activities.Queries;
+using Reactivities.Application.Converter;
+using Reactivities.Application.Profile;
 using Reactivities.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(opt =>
@@ -14,6 +15,10 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
         .LogTo(Console.WriteLine, LogLevel.Information);
 });
 builder.Services.AddCors();
+builder.Services.AddMediatR(x => x
+    .RegisterServicesFromAssemblyContaining<GetActivityList.Handler>());
+builder.Services.AddScoped<IDateTimeConverter, DateTimeConverter>();
+builder.Services.AddAutoMapper(typeof(ActivityProfile).Assembly);
 
 var app = builder.Build();
 

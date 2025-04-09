@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Reactivities.Domain\Domain.csproj" />
+    <ProjectReference Include="..\Reactivities.Domain\Reactivities.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

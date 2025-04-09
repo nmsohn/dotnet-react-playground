@@ -5,15 +5,15 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D064047F-EAC3-4AF2-83BB-C32DF767C343}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "src\Reactivities.API\API.csproj", "{CCFD1D07-0D1F-4482-AFE0-0B88AE7AFDDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactivities.API", "src\Reactivities.API\Reactivities.API.csproj", "{CCFD1D07-0D1F-4482-AFE0-0B88AE7AFDDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "src\Reactivities.Domain\Domain.csproj", "{89A3257C-ACE0-4226-BC8A-F1D494F62C65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactivities.Domain", "src\Reactivities.Domain\Reactivities.Domain.csproj", "{89A3257C-ACE0-4226-BC8A-F1D494F62C65}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactivities.Application", "src\Reactivities.Application\Reactivities.Application.csproj", "{8DEE2F2A-F755-428F-82EF-9A3A10084763}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactivities.Persistence", "src\Reactivities.Persistence\Reactivities.Persistence.csproj", "{627E7913-6295-4D1D-BABB-B94D7BF50067}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrator", "src\Migrator\Migrator.csproj", "{5635C36A-7764-446C-B332-9A5F0C66E9C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactivities.Migrator", "src\Reactivities.Migrator\Reactivities.Migrator.csproj", "{5635C36A-7764-446C-B332-9A5F0C66E9C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

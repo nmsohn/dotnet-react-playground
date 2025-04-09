@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Migrator\Migrator.csproj" />
+    <ProjectReference Include="..\Reactivities.Migrator\Reactivities.Migrator.csproj" />
     <ProjectReference Include="..\Reactivities.Application\Reactivities.Application.csproj" />
   </ItemGroup>
 

@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Reactivities.Domain\Domain.csproj" />
+    <ProjectReference Include="..\Reactivities.Domain\Reactivities.Domain.csproj" />
     <ProjectReference Include="..\Reactivities.Persistence\Reactivities.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="TimeZoneConverter" Version="7.0.0" />
   </ItemGroup>
 
