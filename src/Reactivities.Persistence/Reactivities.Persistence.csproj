@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
     <ProjectReference Include="..\Reactivities.Domain\Reactivities.Domain.csproj" />
   </ItemGroup>
@@ -12,6 +11,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AssemblyName>Reactivities.Persistence</AssemblyName>
+    <RootNamespace>Reactivities.Persistence</RootNamespace>
   </PropertyGroup>
 
 </Project>
