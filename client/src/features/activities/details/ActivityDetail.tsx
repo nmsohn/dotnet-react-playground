@@ -1,14 +1,8 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material"
-import { useActivities } from "../../../lib/hooks/useActivities"
-type Props = {
-    selectedActivity: Activity
-    cancelSelectActivity: () => void
-    openForm: (id: string) => void
-}
-
-export default function ActivityDetail({ selectedActivity, cancelSelectActivity, openForm }: Props) {
-    const { activities } = useActivities()
-    const activity = activities?.find(x => x.id === selectedActivity.id)
+import { useNavigate, Link } from "react-router"
+export default function ActivityDetail() {
+    const activity = {} as Activity
+    const navigate = useNavigate()
 
     if (!activity) return <Typography variant="h5">Activity not found</Typography>
 
@@ -25,11 +19,13 @@ export default function ActivityDetail({ selectedActivity, cancelSelectActivity,
             </CardContent>
             <CardActions>
                 <Button
+                    component={Link}
+                    to={`/activities/${activity.id}`}
                     color="primary"
-                    onClick={() => openForm(activity.id)}>Edit</Button>
+                    onClick={() => {}}>Edit</Button>
                 <Button
                     color="inherit"
-                    onClick={cancelSelectActivity}>Cancel</Button>
+                    onClick={() => navigate('/activities')}>Cancel</Button>
             </CardActions>
         </Card>
     )
