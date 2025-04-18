@@ -22,10 +22,11 @@ export default function NavBar() {
                         <Box sx={{ display: 'flex' }}>
                             <MenuItemLink to="/activities">Activities</MenuItemLink>
                             <MenuItemLink to="/createActivity">Create Activity</MenuItemLink>
-                            <MenuItem
+                            <MenuItemLink to="/counter">Counter</MenuItemLink>
+                            {/* <MenuItem
                                 sx={{ fontSize: '1.2rem', textTransform: 'uppercase', fontWeight: 'bold' }}>
                                 User Menu
-                            </MenuItem>
+                            </MenuItem> */}
                         </Box>
                     </Toolbar>
                 </Container>
