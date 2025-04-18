@@ -18,6 +18,8 @@
     "@tanstack/react-query": "^5.74.0",
     "axios": "^1.7.9",
     "date-fns": "^4.1.0",
+    "mobx": "^6.13.7",
+    "mobx-react-lite": "^4.1.0",
     "react": "^19.0.0",
     "react-calendar": "^5.1.0",
     "react-dom": "^19.0.0"
