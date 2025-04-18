@@ -1,9 +1,13 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material"
-import { useNavigate, Link } from "react-router"
-export default function ActivityDetail() {
-    const activity = {} as Activity
-    const navigate = useNavigate()
+import { useNavigate, Link, useParams } from "react-router"
+import { useActivities } from "../../../lib/hooks/useActivities"
 
+export default function ActivityDetail() {
+    const navigate = useNavigate()
+    const { id } = useParams()
+    const { activity, isLoadingActivity } = useActivities(id)
+
+    if (isLoadingActivity) return <Typography variant="h2">Loading...</Typography>
     if (!activity) return <Typography variant="h5">Activity not found</Typography>
 
     return (
@@ -20,7 +24,7 @@ export default function ActivityDetail() {
             <CardActions>
                 <Button
                     component={Link}
-                    to={`/activities/${activity.id}`}
+                    to={`/manage/${activity.id}`}
                     color="primary"
                     onClick={() => {}}>Edit</Button>
                 <Button
