@@ -1,17 +1,11 @@
-import { makeObservable, observable, action } from "mobx"
+import { makeAutoObservable } from "mobx"
 
 export default class CounterStore {
   count = 42
   title = "Counter store"
 
   constructor() {
-    makeObservable(this, {
-        title: observable,
-        count: observable,
-        increment: action,
-        decrement: action,
-        reset: action
-    })
+    makeAutoObservable(this)
   }
 
   increment = (amount = 1) => {
