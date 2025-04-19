@@ -5,6 +5,7 @@ using Reactivities.Persistence;
 namespace Reactivities.API.Controllers;
 
 [ApiController]
+[Route("api/[controller]")]
 public class DefaultApiController : ControllerBase
 {
     //Lazy Initialization:

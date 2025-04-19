@@ -1,12 +1,12 @@
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Reactivities.Application.Activities.Commands;
+using Reactivities.Application.Activities.dtos;
 using Reactivities.Application.Activities.Queries;
 
 namespace Reactivities.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
 public class ActivitiesController : DefaultApiController
 {
    [HttpGet]
@@ -22,9 +22,9 @@ public class ActivitiesController : DefaultApiController
    }
    
    [HttpPost]
-   public async Task<ActionResult<string>> CreateActivity([FromBody] Activity activity)
+   public async Task<ActionResult<string>> CreateActivity([FromBody] CreateActivityDto activityDto)
    {
-      return await Mediator.Send(new CreateActivity.Command { Activity = activity });
+      return await Mediator.Send(new CreateActivity.Command { ActivityDto = activityDto });
    }
    
    [HttpPut]
