@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Reactivities.Application.Activities.Commands;
 using Reactivities.Application.Activities.dtos;
@@ -6,15 +7,16 @@ using Reactivities.Domain;
 
 namespace Reactivities.API.Controllers;
 
-[ApiController]
 public class ActivitiesController : DefaultApiController
 {
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<List<Activity>>> GetActivities()
     {
         return await Mediator.Send(new GetActivityList.Query());
     }
-
+    
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<ActionResult<Activity>> GetActivityById(string id)
     {
