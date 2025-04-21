@@ -1,8 +1,8 @@
-using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Reactivities.Application.Activities.Commands;
 using Reactivities.Application.Activities.dtos;
 using Reactivities.Application.Activities.Queries;
+using Reactivities.Domain;
 
 namespace Reactivities.API.Controllers;
 

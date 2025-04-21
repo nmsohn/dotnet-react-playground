@@ -1,4 +1,3 @@
-using Domain;
 using MediatR;
 using Reactivities.Application.Core;
 using Reactivities.Persistence;

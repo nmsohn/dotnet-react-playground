@@ -1,6 +1,6 @@
-using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Reactivities.Domain;
 
 namespace Reactivities.Persistence.Configuration;
 

@@ -1,6 +1,6 @@
-using Domain;
 using Reactivities.Application.Activities.dtos;
 using Reactivities.Application.Converter;
+using Reactivities.Domain;
 
 namespace Reactivities.Application.Profile;
 

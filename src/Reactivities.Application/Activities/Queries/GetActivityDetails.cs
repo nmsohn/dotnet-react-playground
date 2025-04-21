@@ -1,6 +1,6 @@
-using Domain;
 using MediatR;
 using Reactivities.Application.Core;
+using Reactivities.Domain;
 using Reactivities.Persistence;
 
 namespace Reactivities.Application.Activities.Queries;

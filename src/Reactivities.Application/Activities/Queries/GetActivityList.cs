@@ -1,6 +1,6 @@
-using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Reactivities.Domain;
 using Reactivities.Persistence;
 
 namespace Reactivities.Application.Activities.Queries;

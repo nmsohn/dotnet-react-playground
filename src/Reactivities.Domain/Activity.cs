@@ -1,4 +1,4 @@
-namespace Domain;
+namespace Reactivities.Domain;
 
 public class Activity
 {

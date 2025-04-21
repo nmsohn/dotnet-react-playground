@@ -1,5 +1,4 @@
 using AutoMapper;
-using Domain;
 using MediatR;
 using Reactivities.Application.Activities.dtos;
 using Reactivities.Application.Core;

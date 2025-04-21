@@ -1,13 +1,13 @@
-using Domain;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Migrator.Setup;
 using Reactivities.API.Extensions;
 using Reactivities.API.Middleware;
 using Reactivities.Application.Activities.Queries;
 using Reactivities.Application.Profile;
 using Reactivities.Application.Validation;
+using Reactivities.Domain;
+using Reactivities.Migrator.Setup;
 using Reactivities.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);

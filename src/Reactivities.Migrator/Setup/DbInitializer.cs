@@ -1,11 +1,12 @@
-using Domain;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Reactivities.Domain;
 using Reactivities.Persistence;
 
-namespace Migrator.Setup;
+namespace Reactivities.Migrator.Setup;
 
 public abstract class DbInitializer
 {
@@ -15,14 +16,15 @@ public abstract class DbInitializer
         var services = scope.ServiceProvider;
         try
         {
-            var context = services.GetService<AppDbContext>();
+            var context = services.GetRequiredService<AppDbContext>();
+            var userManager = services.GetRequiredService<UserManager<User>>();
             if (context is null)
             {
                 throw new ArgumentNullException(nameof(context));
             }
 
             await context.Database.MigrateAsync();
-            await SeedData(context);
+            await SeedData(context, userManager);
         }
         catch (Exception e)
         {
@@ -32,9 +34,41 @@ public abstract class DbInitializer
         }
     }
 
-    private static async Task SeedData(AppDbContext? dbContext)
+    private static async Task SeedData(AppDbContext? dbContext, UserManager<User> userManager)
     {
         ArgumentNullException.ThrowIfNull(dbContext);
+        
+        if (!userManager.Users.Any())
+        {
+            var users = new List<User>
+            {
+                new()
+                {
+                    DisplayName = "Bob",
+                    UserName = "bob@test.com",
+                    Email = "bob@test.com",
+                },
+                new()
+                {
+                    DisplayName = "Tom",
+                    UserName = "tom@test.com",
+                    Email = "tom@test.com",
+                },
+                new()
+                {
+                    DisplayName = "Jane",
+                    UserName = "jane@test.com",
+                    Email = "jane@test.com",
+                }
+                
+            };
+
+            foreach (var user in users)
+            {
+                await userManager.CreateAsync(user, "P@ssw0rd!$$4");
+            }
+        }
+        
         if (dbContext.Activities.Any()) return;
 
         var activities = new List<Activity>
