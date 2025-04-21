@@ -1,4 +1,6 @@
+using Domain;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Migrator.Setup;
 using Reactivities.API.Extensions;
@@ -27,9 +29,11 @@ builder.Services.AddMediatR(x =>
 builder.Services.AddAutoMapper(typeof(ActivityProfile).Assembly);
 builder.Services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
 builder.Services.AddTransient<ExceptionMiddleware>();
+builder.Services.AddIdentityApiEndpoints<User>(opt => { opt.User.RequireUniqueEmail = true; })
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
 
 var app = builder.Build();
-
 await DbInitializer.InitDb(app);
 
 app.UseMiddleware<ExceptionMiddleware>();
@@ -42,8 +46,10 @@ app.UseCors(opt =>
         .WithOrigins("http://localhost:3000", "https://localhost:3000");
 });
 
-app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapGroup("api") // api/login
+    .MapIdentityApi<User>();
 
 app.Run();
