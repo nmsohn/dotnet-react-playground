@@ -1,24 +1,35 @@
 import { useForm } from "react-hook-form"
 import { useAccount } from "../../lib/hooks/useAccount"
-import { loginSchema, LoginSchema } from "../../lib/schemas/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { LockOpen } from "@mui/icons-material";
 import TextInput from "../../shared/components/TextInput";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link } from "react-router";
+import { registerSchema, RegisterSchema } from "../../lib/schemas/RegisterSchema";
 
-export default function LoginForm() {
-    const { loginUser } = useAccount()
-    const navigate = useNavigate()
-    const location = useLocation()
-    const { control, handleSubmit, formState: { isValid, isSubmitting } } = useForm<LoginSchema>({
+export default function RegisterForm() {
+    const { registerUser } = useAccount()
+    const { control, handleSubmit, formState: { isValid, isSubmitting }, setError } = useForm<RegisterSchema>({
         mode: "onTouched",
-        resolver: zodResolver(loginSchema),
+        resolver: zodResolver(registerSchema),
     });
-    const onSubmit = async (data: LoginSchema) => {
-        await loginUser.mutateAsync(data, {
-            onSuccess: () => {
-                navigate(location.state?.from || "/activities", { replace: true })
+
+    const onSubmit = async (data: RegisterSchema) => {
+        await registerUser.mutateAsync(data, {
+            onError: (error) => {
+                if (Array.isArray(error)) {
+                    error.forEach((err) => {
+                        if (err.includes("Email")) {
+                            setError("email", {
+                                type: "manual", message: err
+                            })
+                        } else if (err.includes("Password")) {
+                            setError("password", {
+                                type: "manual", message: err
+                            })
+                        }
+                    })
+                }
             }
         })
     }
@@ -55,6 +66,11 @@ export default function LoginForm() {
                 control={control}
             />
             <TextInput
+                label="Display Name"
+                name="displayName"
+                control={control}
+            />
+            <TextInput
                 label="Password"
                 name="password"
                 control={control}
@@ -66,23 +82,23 @@ export default function LoginForm() {
                 variant="contained"
                 size="large"
             >
-                Sign in
+                Register
             </Button>
             <Typography
                 sx={{
                     textAlign: "center",
                 }}
             >
-                Don't have an account?
+                Already have an account?
                 <Typography
                     sx={{
                         ml: 2
                     }}
                     component={Link}
-                    to="/register"
+                    to="/login"
                     color="primary"
                 >
-                    Sign Up
+                    Sign in
                 </Typography>
             </Typography>
         </Paper>
