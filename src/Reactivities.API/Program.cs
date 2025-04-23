@@ -10,7 +10,7 @@ using Reactivities.Application.Interfaces;
 using Reactivities.Application.Profile;
 using Reactivities.Application.Validation;
 using Reactivities.Domain;
-using Reactivities.Infrastructure;
+using Reactivities.Infrastructure.Security;
 using Reactivities.Migrator.Setup;
 using Reactivities.Persistence;
 
@@ -45,6 +45,16 @@ builder.Services.AddIdentityApiEndpoints<User>(opt =>
     })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("IsActivityHost", policy =>
+    {
+        policy.Requirements.Add(new IsHostRequirement());
+    });
+});
+
+builder.Services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
 
 var app = builder.Build();
 await DbInitializer.InitDb(app);

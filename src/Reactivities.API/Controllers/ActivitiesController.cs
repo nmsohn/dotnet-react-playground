@@ -30,6 +30,7 @@ public class ActivitiesController : DefaultApiController
     }
 
     [HttpPut]
+    [Authorize(Policy = "IsActivityHost")]
     public async Task<ActionResult> EditActivity([FromBody] EditActivityDto activityDto)
     {
         return HandleResult(await Mediator.Send(new EditActivity.Command { ActivityDto = activityDto }));
