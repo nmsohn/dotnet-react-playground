@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Reactivities.Application.Activities.Commands;
 using Reactivities.Application.Activities.dtos;
 using Reactivities.Application.Activities.Queries;
-using Reactivities.Domain;
 
 namespace Reactivities.API.Controllers;
 
@@ -15,7 +14,7 @@ public class ActivitiesController : DefaultApiController
     {
         return await Mediator.Send(new GetActivityList.Query());
     }
-    
+
     [Authorize]
     [HttpGet("{id}")]
     public async Task<ActionResult<ActivityDto>> GetActivityById(string id)

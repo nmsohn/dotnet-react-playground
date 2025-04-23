@@ -17,7 +17,8 @@ public class IsHostRequirementHandler(AppDbContext dbContext, IHttpContextAccess
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
         IsHostRequirement requirement)
     {
-        var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = context.User
+            .FindFirstValue(ClaimTypes.NameIdentifier);
         if (userId == null) return;
 
         var httpContext = httpContextAccessor.HttpContext;
@@ -25,7 +26,9 @@ public class IsHostRequirementHandler(AppDbContext dbContext, IHttpContextAccess
         if (httpContext?.GetRouteValue("id") is not string activityId) return;
 
         var attendee =
-            await dbContext.ActivityAttendees.SingleOrDefaultAsync(
+            await dbContext.ActivityAttendees
+                .AsNoTracking()
+                .SingleOrDefaultAsync(
                 x => x.ActivityId == activityId && x.UserId == userId);
         if(attendee == null) return;
         if(attendee.IsHost) context.Succeed(requirement);
