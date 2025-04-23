@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace Reactivities.Domain;
 
 public class Activity
@@ -12,4 +14,5 @@ public class Activity
     public required string Venue { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set; }
+    public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
 }
