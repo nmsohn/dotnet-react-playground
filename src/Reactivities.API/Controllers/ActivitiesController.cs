@@ -18,7 +18,7 @@ public class ActivitiesController : DefaultApiController
     
     [Authorize]
     [HttpGet("{id}")]
-    public async Task<ActionResult<Activity>> GetActivityById(string id)
+    public async Task<ActionResult<ActivityDto>> GetActivityById(string id)
     {
         return HandleResult(await Mediator.Send(new GetActivityDetails.Query { Id = id }));
     }
