@@ -76,8 +76,42 @@ export const useActivities = (id?: string) => {
         mutationFn: async (id: string) => {
             await agent.post(`/activities/${id}/attend`)
         },
-        onSuccess: async () => {
-            await queryClient.invalidateQueries({ queryKey: ['activities', id] })
+        onMutate: async (activityId: string) => {
+            await queryClient.cancelQueries({ queryKey: ['activities', activityId] })
+
+            const previousActivities = queryClient.getQueryData<Activity[]>(['activities', activityId])
+
+            //optimistic update
+            queryClient.setQueryData<Activity>(['activities', activityId], oldActivity => {
+                if (!oldActivity || !currentUser) {
+                    return oldActivity
+                }
+
+                const isHost = currentUser.id === oldActivity.hostId
+
+                const isAttending = oldActivity.attendees.some(a => a.id === currentUser.id)
+
+                return {
+                    ...oldActivity,
+                    isCancelled: isHost ? !oldActivity.isCancelled : oldActivity.isCancelled,
+                    attendees: isAttending
+                        ? isHost
+                            ? oldActivity.attendees
+                            : oldActivity.attendees.filter(a => a.id !== currentUser.id)
+                        : [...oldActivity.attendees, {
+                            id: currentUser.id, displayName: currentUser.displayName, imageUrl: currentUser.imageUrl
+                        }],
+                }
+            })
+
+            return { previousActivities }
+        },
+        onError: (error, activityId, context) => {
+            console.error('Error updating attendance', error)
+            // Rollback the optimistic update
+            if(context?.previousActivities){
+                queryClient.setQueryData(['activities', activityId], context.previousActivities)
+            }
         }
     })
 
