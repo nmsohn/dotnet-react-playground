@@ -21,7 +21,7 @@ export default function ActivityDetailPage() {
                 <AcitivityDetailsChat />
             </Grid2>
             <Grid2 size={4}>
-                <AcitivityDetailsSidebar/>
+                <AcitivityDetailsSidebar activity={activity} />
             </Grid2>
         </Grid2>
     )
