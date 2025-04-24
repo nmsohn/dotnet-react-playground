@@ -2,17 +2,16 @@ import { Avatar, Box, Button, Card, CardContent, CardHeader, Chip, Divider, Typo
 import { Link } from "react-router"
 import { AccessTime, Place } from "@mui/icons-material"
 import { formatDate } from "../../../lib/util/util"
+import AvatarPopover from "../../../shared/components/AvatarPopover"
 
 type Props = {
   activity: Activity
 }
 
 export default function ActivityCard({ activity }: Props) {
-  const isHost = false;
-  const isGoing = false;
-  const label = isHost ? "You are hosting this activity" : isGoing ? "You are going to this activity" : "Join Activity";
-  const isCancelled = false;
-  const color = isHost ? "secondary" : isGoing ? "warning" : "default"
+
+  const label = activity.isHost ? "You are hosting this activity" : "You are going to this activity"
+  const color = activity.isHost ? "secondary" : activity.isGoing ? "warning" : "default"
 
   return (
     <Card elevation={3} sx={{ borderRadius: 3 }}>
@@ -26,7 +25,7 @@ export default function ActivityCard({ activity }: Props) {
           }}
           subheader={
             <>
-              Hosted by {' '} <Link to={`/profiles/bob`}>Bob</Link>
+              Hosted by {' '} <Link to={`/profiles/${activity.hostId}`}>{activity.hostDisplayName}</Link>
             </>
 
           }
@@ -38,8 +37,8 @@ export default function ActivityCard({ activity }: Props) {
           gap={2}
           mr={2}
         >
-          {(isHost || isGoing && <Chip label={label} color={color} />)}
-          {isCancelled && <Chip label="Cancelled" color="error" sx={{ borderRadius: 2 }} />}
+          {(activity.isHost || activity.isGoing && <Chip label={label} color={color} />)}
+          {activity.isCancelled && <Chip label="Cancelled" color="error" sx={{ borderRadius: 2 }} />}
         </Box>
       </Box>
 
@@ -74,7 +73,9 @@ export default function ActivityCard({ activity }: Props) {
             py: 3,
             pl: 3
           }}>
-          Attendees go here
+          {activity.attendees.map(attendee => (
+            <AvatarPopover profile={attendee} key={attendee.id} />
+          ))}
         </Box>
       </CardContent>
       <CardContent sx={{ pb: 2 }}>
