@@ -19,4 +19,10 @@ public class UserProfileController : DefaultApiController
     {
         return HandleResult(await Mediator.Send(new GetProfilePhotos.Query { UserId = userId }));
     }
+
+    [HttpDelete("{photoId}/photos")]
+    public async Task<ActionResult> DeletePhoto([FromRoute] string photoId)
+    {
+        return HandleResult(await Mediator.Send(new DeletePhoto.Command { PhotoId = photoId }));
+    }
 }
