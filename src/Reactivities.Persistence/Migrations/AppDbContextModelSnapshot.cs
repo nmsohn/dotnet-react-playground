@@ -217,6 +217,30 @@ namespace Reactivities.Persistence.Migrations
                     b.ToTable("ActivityAttendees");
                 });
 
+            modelBuilder.Entity("Reactivities.Domain.Photo", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("Reactivities.Domain.User", b =>
                 {
                     b.Property<string>("Id")
@@ -360,6 +384,17 @@ namespace Reactivities.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Reactivities.Domain.Photo", b =>
+                {
+                    b.HasOne("Reactivities.Domain.User", "User")
+                        .WithMany("Photos")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Reactivities.Domain.Activity", b =>
                 {
                     b.Navigation("Attendees");
@@ -368,6 +403,8 @@ namespace Reactivities.Persistence.Migrations
             modelBuilder.Entity("Reactivities.Domain.User", b =>
                 {
                     b.Navigation("Activities");
+
+                    b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618
         }
