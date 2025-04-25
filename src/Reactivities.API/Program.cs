@@ -10,6 +10,7 @@ using Reactivities.Application.Interfaces;
 using Reactivities.Application.Profile;
 using Reactivities.Application.Validation;
 using Reactivities.Domain;
+using Reactivities.Infrastructure.Photos;
 using Reactivities.Infrastructure.Security;
 using Reactivities.Migrator.Setup;
 using Reactivities.Persistence;
@@ -55,6 +56,8 @@ builder.Services.AddAuthorization(opt =>
 });
 
 builder.Services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 
 var app = builder.Build();
 await DbInitializer.InitDb(app);
