@@ -25,4 +25,10 @@ public class UserProfileController : DefaultApiController
     {
         return HandleResult(await Mediator.Send(new DeletePhoto.Command { PhotoId = photoId }));
     }
+
+    [HttpPut("{photoId}/set-main")]
+    public async Task<ActionResult<Photo>> SetMainPhoto([FromRoute] string photoId)
+    {
+       return HandleResult(await Mediator.Send(new SetMainPhoto.Command { PhotoId = photoId })); 
+    }
 }
