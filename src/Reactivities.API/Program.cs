@@ -7,7 +7,7 @@ using Reactivities.API.Extensions;
 using Reactivities.API.Middleware;
 using Reactivities.Application.Activities.Queries;
 using Reactivities.Application.Interfaces;
-using Reactivities.Application.Profile;
+using Reactivities.Application.MappingProfile;
 using Reactivities.Application.Validation;
 using Reactivities.Domain;
 using Reactivities.Infrastructure.Photos;

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Reactivities.Application.Users.Commands;
+using Reactivities.Application.Users.Dtos;
 using Reactivities.Application.Users.Queries;
 using Reactivities.Domain;
 
@@ -30,5 +31,11 @@ public class UserProfileController : DefaultApiController
     public async Task<ActionResult<Photo>> SetMainPhoto([FromRoute] string photoId)
     {
        return HandleResult(await Mediator.Send(new SetMainPhoto.Command { PhotoId = photoId })); 
+    }
+    
+    [HttpGet("{userId}")]
+    public async Task<ActionResult<UserProfileDto>> GetUserProfile([FromRoute] string userId)
+    {
+        return HandleResult(await Mediator.Send(new GetProfile.Query { UserId = userId }));
     }
 }

@@ -3,7 +3,7 @@ using Reactivities.Application.Converter;
 using Reactivities.Application.Users.Dtos;
 using Reactivities.Domain;
 
-namespace Reactivities.Application.Profile;
+namespace Reactivities.Application.MappingProfile;
 
 public class ActivityProfile : AutoMapper.Profile
 {
@@ -25,5 +25,7 @@ public class ActivityProfile : AutoMapper.Profile
             .ForMember(dest => dest.Bio, opt => opt.MapFrom(s => s.User.Bio))
             .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(s => s.User.ImageUrl))
             .ForMember(dest => dest.Id, opt => opt.MapFrom(s => s.User.Id));
+
+        CreateMap<User, UserProfileDto>();
     }
 }
