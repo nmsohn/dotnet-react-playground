@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Reactivities.Application.Users.Commands;
+using Reactivities.Application.Users.Queries;
 using Reactivities.Domain;
 
 namespace Reactivities.API.Controllers;
@@ -11,5 +12,11 @@ public class UserProfileController : DefaultApiController
     public async Task<ActionResult<Photo>> AddPhoto([FromForm] IFormFile file)
     {
         return HandleResult(await Mediator.Send(new AddPhoto.Command { File = file }));
+    }
+
+    [HttpGet("{userId}/photos")]
+    public async Task<ActionResult<List<Photo>>> GetPhotos([FromRoute] string userId)
+    {
+        return HandleResult(await Mediator.Send(new GetProfilePhotos.Query { UserId = userId }));
     }
 }
