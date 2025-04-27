@@ -57,6 +57,28 @@ export const useProfile = (id?: string) => {
         }
     })
 
+    const setMainPhoto = useMutation({
+        mutationFn: async (photo: Photo) => {
+            await agent.put(`/profile/${photo.id}/set-main`)
+        },
+        onSuccess: (_, photo) => {
+            queryClient.setQueryData(["user"], (userData: User) => {
+                if(!userData) return userData
+                return {
+                    ...userData,
+                    imageUrl: photo.url
+                }
+            })
+            queryClient.setQueryData(["profile", id], (profile: Profile) => {
+                if(!profile) return profile
+                return {
+                    ...profile,
+                    imageUrl: photo.url
+                }
+            })
+        }
+    })
+
     const isCurrentUser = useMemo(() => {
         return id === queryClient.getQueryData<User>(['user'])?.id
     }, [id, queryClient])
@@ -67,7 +89,8 @@ export const useProfile = (id?: string) => {
         photos,
         loadingPhotos,
         isCurrentUser,
-        uploadPhoto
+        uploadPhoto,
+        setMainPhoto
     }
 }
 
