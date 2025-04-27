@@ -1,6 +1,10 @@
 import { Avatar, Box, Button, Chip, Divider, Grid2, Paper, Stack, Typography } from "@mui/material";
 
-export default function ProfileHeader() {
+type Props = {
+    profile: Profile
+}
+
+export default function ProfileHeader({ profile }: Props) {
     const isFollowing = true;
 
 
@@ -23,6 +27,8 @@ export default function ProfileHeader() {
                         alignItems="center"
                     >
                         <Avatar
+                            src={profile.imageUrl}
+                            alt={profile.displayName + " image"}
                             sx={{
                                 width: 150,
                                 height: 150,
@@ -33,7 +39,7 @@ export default function ProfileHeader() {
                             flexDirection={"column"}
                             gap={2}
                         >
-                            <Typography variant="h4"> Display Name </Typography>
+                            <Typography variant="h4">{profile.displayName}</Typography>
 
                             {isFollowing && <Chip
                                 variant="outlined"
