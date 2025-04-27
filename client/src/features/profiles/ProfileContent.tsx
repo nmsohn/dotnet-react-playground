@@ -1,17 +1,18 @@
 import { Box, Paper, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import ProfilePhotos from "./ProfilePhotos";
+import ProfileAbout from "./ProfileAbout";
 
 export default function ProfileContent() {
   const [value, setValue] = useState(0);
   const tabContent = [
     {
       label: 'About',
-      content: <div>About</div>
+      content: <ProfileAbout />
     },
     {
       label: 'Photos',
-      content: <ProfilePhotos /> 
+      content: <ProfilePhotos />
     },
     {
       label: 'Events',
@@ -68,7 +69,8 @@ export default function ProfileContent() {
       <Box
         sx={{
           flexGrow: 1,
-          p: 3
+          p: 3,
+          pt: 0
         }}
       >
         {tabContent[value].content}

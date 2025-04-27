@@ -38,8 +38,8 @@ export default function ProfileCard({ profile }: Props) {
                 <CardContent>
                     <Box
                         display="flex"
-                        alignItems="center"
                         gap={1}
+                        flexDirection="column"
                     >
                         <Typography
                             variant="h5"
@@ -48,6 +48,17 @@ export default function ProfileCard({ profile }: Props) {
                                 profile.displayName
                             }
                         </Typography>
+                        {profile.bio && (
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    textOverflow: "ellipsis",
+                                    overflow: "hidden",
+                                    whiteSpace: "nowrap"
+                                }}>
+                                {profile.bio}
+                            </Typography>
+                        )}
                         {following && <Chip size="small" label="following" color="secondary" variant="outlined"
                         />}
                     </Box>
