@@ -15,4 +15,5 @@ public class Activity
     public double Latitude { get; set; }
     public double Longitude { get; set; }
     public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
+    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 }
