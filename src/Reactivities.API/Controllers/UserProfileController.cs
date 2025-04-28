@@ -32,6 +32,12 @@ public class UserProfileController : DefaultApiController
     {
        return HandleResult(await Mediator.Send(new SetMainPhoto.Command { PhotoId = photoId })); 
     }
+
+    [HttpPut]
+    public async Task<ActionResult> EditPhoto([FromBody] UpdateUserProfileDto dto)
+    {
+        return HandleResult(await Mediator.Send(new UpdateProfile.Command { UserProfileDto = dto }));
+    }
     
     [HttpGet("{userId}")]
     public async Task<ActionResult<UserProfileDto>> GetUserProfile([FromRoute] string userId)
