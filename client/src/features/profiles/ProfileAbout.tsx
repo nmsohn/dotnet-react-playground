@@ -1,10 +1,14 @@
 import { useParams } from 'react-router';
 import { useProfile } from '../../lib/hooks/useProfile';
 import { Box, Button, Divider, Typography } from '@mui/material';
+import ProfileEditForm from './ProfileEditForm';
+import { useState } from 'react';
 
 export default function ProfileAbout() {
     const { id } = useParams()
     const { profile } = useProfile(id)
+    const [editMode, setEditMode] = useState(false)
+
     return (
         <Box>
             <Box
@@ -26,8 +30,11 @@ export default function ProfileAbout() {
                     sx={{
                         whiteSpace: "pre-wrap"
                     }}>
-                        {profile?.bio || "No description"}
-                    </Typography>
+                    {profile?.bio || "No description"}
+                </Typography>
+                {editMode &&
+                    <ProfileEditForm setEditMode={setEditMode} />
+                }
             </Box>
         </Box>
     )
