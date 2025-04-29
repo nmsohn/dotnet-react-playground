@@ -3,7 +3,7 @@ import agent from "../agent"
 import { useMemo } from "react"
 import { EditProfileSchema } from "../schemas/EditProfileSchema"
 
-export const useProfile = (id?: string) => {
+export const useProfile = (id?: string, predicate?: string) => {
     const queryClient = useQueryClient()
 
     const { data: profile, isLoading: loadingProfile } = useQuery<Profile>({
@@ -14,7 +14,7 @@ export const useProfile = (id?: string) => {
             )
             return response.data
         },
-        enabled: !!id
+        enabled: !!id && !predicate
     })
 
     const { data: photos, isLoading: loadingPhotos } = useQuery<Photo[]>({
@@ -25,7 +25,16 @@ export const useProfile = (id?: string) => {
             )
             return response.data
         },
-        enabled: !!id
+        enabled: !!id && !predicate
+    })
+
+    const { data: followings, isLoading: loadingFollowings } = useQuery<Profile[]>({
+        queryKey: ["followings", id, predicate],
+        queryFn: async () => {
+            const response = await agent.get<Profile[]>(`/profile/${id}/follow-list?predicate=${predicate}`)
+            return response.data
+        },
+        enabled: !!id && !!predicate
     })
 
     const uploadPhoto = useMutation({
@@ -33,7 +42,7 @@ export const useProfile = (id?: string) => {
             const formData = new FormData()
             formData.append("file", file)
             const response = await agent.post("/profile/add-photo", formData, {
-                headers: {"Content-Type": "multipart/form-data"}
+                headers: { "Content-Type": "multipart/form-data" }
             })
             return response.data
         },
@@ -42,14 +51,14 @@ export const useProfile = (id?: string) => {
                 queryKey: ["photos", id]
             })
             queryClient.setQueryData(["user"], (data: User) => {
-                if(!data) return data
+                if (!data) return data
                 return {
                     ...data,
                     imageUrl: data.imageUrl ?? photo.url
                 }
             })
             queryClient.setQueryData(["profile", id], (data: Profile) => {
-                if(!data) return data
+                if (!data) return data
                 return {
                     ...data,
                     imageUrl: data.imageUrl ?? photo.url
@@ -64,14 +73,14 @@ export const useProfile = (id?: string) => {
         },
         onSuccess: (_, photo) => {
             queryClient.setQueryData(["user"], (userData: User) => {
-                if(!userData) return userData
+                if (!userData) return userData
                 return {
                     ...userData,
                     imageUrl: photo.url
                 }
             })
             queryClient.setQueryData(["profile", id], (profile: Profile) => {
-                if(!profile) return profile
+                if (!profile) return profile
                 return {
                     ...profile,
                     imageUrl: photo.url
@@ -97,14 +106,14 @@ export const useProfile = (id?: string) => {
         },
         onSuccess: (_, profile) => {
             queryClient.setQueryData(["user"], (data: User) => {
-                if(!data) return data
+                if (!data) return data
                 return {
                     ...data,
                     displayName: profile.displayName
                 }
             })
             queryClient.setQueryData(["profile", id], (data: Profile) => {
-                if(!data) return data
+                if (!data) return data
                 return {
                     ...data,
                     displayName: profile.displayName,
@@ -112,6 +121,22 @@ export const useProfile = (id?: string) => {
                 }
             })
         }
+    })
+
+    const updateFollowing = useMutation({
+        mutationFn: async () => {
+            await agent.post(`/profile/${id}/follow`)
+        },
+        onSuccess() {
+            queryClient.setQueryData(["profile", id], (profile: Profile) => {
+                if (!profile || profile.followersCount === undefined) return profile
+                return {
+                    ...profile,
+                    isFollowing: !profile.isFollowing,
+                    followersCount: profile.isFollowing ? profile.followersCount - 1 : profile.followersCount + 1,
+                }
+            })
+        },
     })
 
     const isCurrentUser = useMemo(() => {
@@ -127,7 +152,10 @@ export const useProfile = (id?: string) => {
         uploadPhoto,
         setMainPhoto,
         deletePhoto,
-        updateProfile
+        updateProfile,
+        updateFollowing,
+        followings,
+        loadingFollowings
     }
 }
 
