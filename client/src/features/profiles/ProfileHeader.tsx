@@ -2,13 +2,9 @@ import { Avatar, Box, Button, Chip, Divider, Grid2, Paper, Stack, Typography } f
 import { useParams } from "react-router";
 import { useProfile } from "../../lib/hooks/useProfile";
 
-type Props = {
-    profile: Profile
-}
-
-export default function ProfileHeader({ profile }: Props) {
+export default function ProfileHeader() {
     const { id } = useParams()
-    const { isCurrentUser, updateFollowing } = useProfile(id)
+    const { isCurrentUser, profile, updateFollowing } = useProfile(id)
 
     if (!profile) return null
 
