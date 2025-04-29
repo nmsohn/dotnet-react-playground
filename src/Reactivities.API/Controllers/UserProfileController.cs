@@ -50,4 +50,10 @@ public class UserProfileController : DefaultApiController
     {
         return HandleResult(await Mediator.Send(new FollowToggle.Command { TargetId = userId }));
     }
+
+    [HttpGet("{userId}/follow-list")]
+    public async Task<ActionResult> GetFollowList([FromRoute] string userId, [FromQuery] string predicate)
+    {
+        return HandleResult(await Mediator.Send(new GetFollowings.Query { UserId = userId, Predicate = predicate }));
+    }
 }

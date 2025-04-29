@@ -7,9 +7,9 @@ public class Comment
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public required string UserId { get; set; }
-    public User? User { get; set; } = null;
+    public User? User { get; set; }
 
     public required string ActivityId { get; set; }
-    public Activity? Activity { get; set; } = null;
+    public Activity? Activity { get; set; }
 
 }
