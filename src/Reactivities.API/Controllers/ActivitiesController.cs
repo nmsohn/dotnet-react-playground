@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Reactivities.Application.Activities.Commands;
 using Reactivities.Application.Activities.dtos;
 using Reactivities.Application.Activities.Queries;
+using Reactivities.Application.Core;
 
 namespace Reactivities.API.Controllers;
 
@@ -10,9 +11,9 @@ public class ActivitiesController : DefaultApiController
 {
     [AllowAnonymous]
     [HttpGet]
-    public async Task<ActionResult<List<ActivityDto>>> GetActivities()
+    public async Task<ActionResult<PagedList<ActivityDto, DateTime?>>> GetActivities(DateTime? cursor)
     {
-        return await Mediator.Send(new GetActivityList.Query());
+        return HandleResult(await Mediator.Send(new GetActivityList.Query { Cursor = cursor }));
     }
 
     [Authorize]
