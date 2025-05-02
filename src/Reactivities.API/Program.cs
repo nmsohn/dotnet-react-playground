@@ -11,10 +11,12 @@ using Reactivities.Application.Interfaces;
 using Reactivities.Application.MappingProfile;
 using Reactivities.Application.Validation;
 using Reactivities.Domain;
+using Reactivities.Infrastructure.Email;
 using Reactivities.Infrastructure.Photos;
 using Reactivities.Infrastructure.Security;
 using Reactivities.Migrator.Setup;
 using Reactivities.Persistence;
+using Resend;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +39,11 @@ builder.Services.AddMediatR(x =>
     x.RegisterServicesFromAssemblyContaining<GetActivityList.Handler>();
     x.AddOpenBehavior(typeof(ValidationBehaviour<,>));
 });
+builder.Services.AddHttpClient<ResendClient>();
+builder.Services.Configure<ResendClientOptions>(opt => { opt.ApiToken = builder.Configuration["Resend:ApiToken"]!; });
+builder.Services.AddTransient<IResend, ResendClient>();
+builder.Services.AddTransient<IEmailSender<User>, EmailSender>();
+
 builder.Services.AddScoped<IUserAccessor, UserAccessor>();
 builder.Services.AddAutoMapper(typeof(ActivityProfile).Assembly);
 builder.Services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
@@ -44,17 +51,14 @@ builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.AddIdentityApiEndpoints<User>(opt =>
     {
         opt.User.RequireUniqueEmail = true;
-        
+        opt.SignIn.RequireConfirmedEmail = true;
     })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddAuthorization(opt =>
 {
-    opt.AddPolicy("IsActivityHost", policy =>
-    {
-        policy.Requirements.Add(new IsHostRequirement());
-    });
+    opt.AddPolicy("IsActivityHost", policy => { policy.Requirements.Add(new IsHostRequirement()); });
 });
 
 builder.Services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
