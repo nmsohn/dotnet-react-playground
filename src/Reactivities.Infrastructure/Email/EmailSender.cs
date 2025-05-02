@@ -14,7 +14,7 @@ public class EmailSender(IResend resend) : IEmailSender<User>
             <p><a href='{confirmationLink}'>Click here to verify</p>
             <p>Thanks</p>
         ";
-        await SendMailAsync(email, subject, body);
+        await SendEmailAsync(email, subject, body);
     }
 
     public Task SendPasswordResetLinkAsync(User user, string email, string resetLink)
@@ -27,7 +27,7 @@ public class EmailSender(IResend resend) : IEmailSender<User>
         throw new NotImplementedException();
     }
 
-    private async Task SendMailAsync(string email, string subject, string body)
+    private async Task SendEmailAsync(string email, string subject, string body)
     {
         var message = new EmailMessage
         {
