@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useAccount } from "../../lib/hooks/useAccount"
 import { useSearchParams, Link } from 'react-router';
-import { set } from "date-fns"
 import { Box, Button, Divider, Paper, Typography } from "@mui/material"
 import { EmailRounded } from "@mui/icons-material";
 
