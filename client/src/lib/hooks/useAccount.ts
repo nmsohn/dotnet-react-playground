@@ -37,6 +37,27 @@ export const useAccount = () => {
         }
     })
 
+    const verifyEmail = useMutation({
+        mutationFn: async ({ userId, code }: { userId: string, code: string }) => {
+            //NOTE: check if the url can be customisable
+            await agent.post(`/confirmEmail?userId=${userId}&code=${code}`)
+        }
+    })
+
+    const resendEmail = useMutation({
+        mutationFn: async ({ email, userId }: { email?: string, userId?: string | null }) => {
+            await agent.get(`/resend-confirm-email`, {
+                params: {
+                    email,
+                    userId
+                }
+            })
+        },
+        onSuccess: () => {
+            toast.success("Please check your email for the confirmation link")
+        }
+    })
+
     const { data: currentUser, isLoading: loadingUserInfo } = useQuery({
         queryKey: ["user"],
         queryFn: async () => {
@@ -53,6 +74,8 @@ export const useAccount = () => {
         currentUser,
         logoutUser,
         loadingUserInfo,
-        registerUser
+        registerUser,
+        verifyEmail,
+        resendEmail
     }
 }

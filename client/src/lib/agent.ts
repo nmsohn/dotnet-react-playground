@@ -32,7 +32,7 @@ agent.interceptors.response.use(
         const { status, data } = error.response
         switch (status) {
             case 400:
-                if(data.errors) {
+                if (data.errors) {
                     const modelStateErrors: string[] = []
                     for (const key in data.errors) {
                         if (data.errors[key]) {
@@ -43,7 +43,12 @@ agent.interceptors.response.use(
                 }
                 break
             case 401:
-                toast.error("Unauthorise")
+                if (data.detail === "NotAllowed") {
+                    throw new Error(data.detail)
+                } else {
+
+                    toast.error("Unauthorise")
+                }
                 break
             case 404:
                 router.navigate("/not-found")
