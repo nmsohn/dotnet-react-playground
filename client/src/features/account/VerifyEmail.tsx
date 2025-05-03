@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react"
 import { useAccount } from "../../lib/hooks/useAccount"
-import { useSearchParams, Link } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { Box, Button, Divider, Paper, Typography } from "@mui/material"
 import { EmailRounded } from "@mui/icons-material";
 
 export default function VerifyEmail() {
-    const { verifyEmail } = useAccount()
+    const { verifyEmail, resendEmail } = useAccount()
     const [status, setStatus] = useState("verifying")
     const [searchParams] = useSearchParams()
     const userId = searchParams.get("userId")
@@ -36,8 +36,11 @@ export default function VerifyEmail() {
                         justifyContent={"center"}
                     >
                         <Typography>Failed to verify email</Typography>
-                        <Button component={Link} to="/login">
-                            Login
+                        <Button
+                            onClick={() => resendEmail.mutate({ userId })}
+                            disabled={resendEmail.isPending}
+                        >
+                            Resend Verification Email
                         </Button>
                     </Box>
                 )

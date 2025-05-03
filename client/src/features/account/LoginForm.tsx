@@ -7,6 +7,7 @@ import { LockOpen } from "@mui/icons-material";
 import TextInput from "../../shared/components/TextInput";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function LoginForm() {
     const [notVerified, setNotVerified] = useState(false)
@@ -32,8 +33,13 @@ export default function LoginForm() {
     const email = watch("email")
 
     const handleResendEmail = async () => {
-        await resendEmail.mutateAsync(email)
-        setNotVerified(false)
+        try {
+            await resendEmail.mutateAsync({ email })
+            setNotVerified(false)
+        } catch (error) {
+            console.log(error)
+            toast.error("Failed to resend email")
+        }
     }
 
     return (

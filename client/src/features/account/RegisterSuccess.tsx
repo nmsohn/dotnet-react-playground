@@ -39,7 +39,7 @@ export default function RegisterSuccess({ email }: Props) {
             </Typography>
             <Button
                 fullWidth
-                onClick={() => resendEmail.mutate(email)}
+                onClick={() => resendEmail.mutate({ email })}
             >
                 Re-send confirmation email
             </Button>
